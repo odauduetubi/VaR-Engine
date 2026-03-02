@@ -31,7 +31,7 @@ def historical_var(returns, confidence_level=0.99):
 def parametric_var(returns, confidence_level=0.99):
     mu = returns.mean() # mean
     sigma = returns.std()  # standard deviation
-    z_score = stats.norm.ppf(confidence_level)
+    z_score = stats.norm.ppf(1 - confidence_level)
     return -(mu + z_score * sigma)
 
 def cvar(returns, confidence_level=0.99):
