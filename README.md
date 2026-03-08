@@ -4,6 +4,7 @@
 1. [About the project](#about-the-project)
 2. [VaR (Value at Risk)](#var)
     * [Test for normality](#test-for-normality)
+3. [How to run the app](#how-to-run-the-app)
 ## About the project
 This project builds a professional grade quantitative risk engine for measuring and managing portfolio risk using statistical and simulation based methods. It addresses one of the most fundamental questions in finance that is "How much can one lose tomorrow, and how bad can it get in a worst-case scenario?".
 Applied to a diversified $1,000,000 multi-asset portfolio spanning equities (AAPL, MSFT), financials (JPM), commodities (GLD), and fixed income (TLT), the engine implements three progressively sophisticated Value at Risk (VaR) methodologies, namely; 
@@ -19,3 +20,4 @@ The project follows a rigorous analytical workflow, statistical testing first es
 ### Test for normality
 Performing several tests such as JB test. The Jarque-Bera tests reject normality for all assets at the 1% significance level. Excess kurtosis ranging from 3.07 (GLD) to 12.94 (JPM) confirms significant fat tails across the portfolio, while negative skewness in four of five assets indicates asymmetric downside risk. These findings invalidate the normality assumption underlying parametric VaR and motivate the use of Monte Carlo simulation with empirically calibrated return distributions
 
+## How to run the app
