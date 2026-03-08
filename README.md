@@ -10,6 +10,7 @@ Applied to a diversified $1,000,000 multi-asset portfolio spanning equities (AAP
 - Historical Simulation
 - Parametric (Gaussian)
 - Monte Carlo with Cholesky decomposition
+  
 and extends to GARCH(1,1) volatility modelling to capture real world volatility clustering absent in standard Geometric Brownian Motion (GBM) assumptions.
 The project follows a rigorous analytical workflow, statistical testing first establishes that asset returns violate the normality assumption underlying standard risk models (Jarque-Bera tests reject normality for all assets, with excess kurtosis ranging from 3.07 to 12.94), motivating the need for more sophisticated approaches. Model integrity is then formally validated through walk-forward backtesting using the Kupiec Proportion of Failures test which is a regulatory standard under Basel III/IV. The backtest reveals violation clustering around the COVID-19 crash (March 2020) and the Federal Reserve rate hiking cycle (2022), confirming that static historical VaR suffers from regime blindness and motivating the GARCH extension. Portfolio allocation is further optimised via Markowitz Efficient Frontier analysis and Maximum Sharpe Ratio optimisation across 5,000 simulated portfolios. All findings are accessible through an interactive Streamlit dashboard enabling dynamic risk metric computation across user defined assets, weights, and confidence levels.
 
