@@ -56,5 +56,5 @@ From the analysis we made, GARCH(1,1) volatility forecasts are materially lower 
 
 ## Related Topics to Explore
 - [VaR(Value at Risk)](https://en.wikipedia.org/wiki/Value_at_risk)
-- [GARCH (Generalised Autoregressive Conditional Heteroskedasticity)]([https://en.wikipedia.org/wiki/Long_short-term_memory](https://www.geeksforgeeks.org/artificial-intelligence/generalized-autoregressive-conditional-heteroskedasticity/))
+- [GARCH (Generalised Autoregressive Conditional Heteroskedasticity)](https://www.geeksforgeeks.org/artificial-intelligence/generalized-autoregressive-conditional-heteroskedasticity/)
 - [Geometric Brownian Motion](https://en.wikipedia.org/wiki/Geometric_Brownian_motion)
