@@ -1,4 +1,5 @@
 # VAR Engine
+<img width="1836" height="615" alt="dash" src="https://github.com/user-attachments/assets/52cb46ae-631d-4f69-944a-067aff923d54" />
 
 ## Table of Content
 1. [About the project](#about-the-project)
