@@ -21,3 +21,16 @@ The project follows a rigorous analytical workflow, statistical testing first es
 Performing several tests such as JB test. The Jarque-Bera tests reject normality for all assets at the 1% significance level. Excess kurtosis ranging from 3.07 (GLD) to 12.94 (JPM) confirms significant fat tails across the portfolio, while negative skewness in four of five assets indicates asymmetric downside risk. These findings invalidate the normality assumption underlying parametric VaR and motivate the use of Monte Carlo simulation with empirically calibrated return distributions
 
 ## How to run the app
+1. Click the "Fork" button on GitHub to copy this repository to your account.
+2. Clone your fork locally:
+   ```
+   git clone https://github.com/<your-username>/<your-forked-repo>.git
+   ```
+3. Install dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
+4. Run the app:
+   ```
+   streamlit run app.py
+   ```
