@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from arch import arch_model
 
 
 def monte_carlo_var(log_returns, weights, portfolio_value=1_000_000, simulations=10_000, horizon=1, confidence_level=0.99):
@@ -15,7 +16,7 @@ def monte_carlo_var(log_returns, weights, portfolio_value=1_000_000, simulations
     for _ in range(simulations):
         # Generate correlated random shocks
         z = np.random.standard_normal(len(weights))
-        correlated_shocks = L @ z # @ is the matrix multiplication operator in Python 3.5+
+        correlated_shocks = L @ z # @ is the matrix multiplication operator
 
         # Simulate returns for each asset
         simulated_returns = mean_returns + correlated_shocks
@@ -57,3 +58,41 @@ def monte_carlo_paths(log_returns, weights, portfolio_value=1_000_000, simulatio
         all_paths.append(path)
 
     return np.array(all_paths)
+
+
+def fit_garch(returns_series):
+    model = arch_model(returns_series * 100, vol='Garch', p=1, q=1)
+    result = model.fit(disp='off')
+    forecasts = result.forecast(horizon=1)
+    garch_volatility = np.sqrt(forecasts.variance.values[-1, 0]) / 100
+    return garch_volatility, result
+
+def monte_carlo_var_garch(log_returns, weights, portfolio_value=1_000_000, simulations=10_000, confidence_level=0.99):
+
+    """
+    Monte Carlo VaR calculation using GARCH(1,1) volatility forecasts.
+    """
+
+    weights = np.array(weights)
+    mean_returns = log_returns.mean().values
+
+    # Next we use the fit GARCH(1,1) models to each asset  
+    garch_volatility = np.array([fit_garch(log_returns[col])[0] for col in log_returns.columns]) # Get the GARCH volatility forecasts for each asset
+
+    corr_matrix = log_returns.corr().values # Get the correlation matrix of returns
+    garch_cov_matrix = np.outer(garch_volatility, garch_volatility) * corr_matrix # Construct the GARCH covariance matrix
+    L = np.linalg.cholesky(garch_cov_matrix) # Cholesky decomposition for generating correlated random returns
+
+    simulated_portfolio_returns = [] 
+    for _ in range(simulations):
+        z = np.random.standard_normal(len(weights)) # Generate correlated random shocks
+        correlated_shocks = L @ z # @ is the matrix multiplication operator
+        simulated_returns = mean_returns + correlated_shocks # Simulate returns for each asset
+        portfolio_return = np.dot(weights, simulated_returns) # Portfolio return
+        simulated_portfolio_returns.append(portfolio_return)
+
+    simulated_portfolio_returns = np.array(simulated_portfolio_returns)
+    mc_var = -np.percentile(simulated_portfolio_returns, (1 - confidence_level) * 100)
+    mc_cvar = -simulated_portfolio_returns[simulated_portfolio_returns < -mc_var].mean()
+
+    return {'simulated_returns': simulated_portfolio_returns, 'VaR': mc_var * portfolio_value, 'CVaR': mc_cvar * portfolio_value, 'garch_volatility': dict(zip(log_returns.columns, garch_volatility))}
